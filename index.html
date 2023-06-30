@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <title>Weather Forecast</title>
+</head>
+
+<body class="flex-column min-100-vh">
+  <header class="hero">
+    <h1 class="app-title justify-center">
+      <i class="fa-solid fa-cloud-moon"></i> Weather Forecast
+    </h1>
+      <ul id="header-list">
+        <li>30June2023</li>
+        <li>icon</li>
+        <li>Temp: <span id="temp">deg</span> degC</li>
+        <li>Wind: <span id="wind">blow</span> mph</li>
+        <li>Humidity: <span id="hum">num</span> %</li>
+        <li>UV Index: <span id="hum">num</span></li>
+      </ul>
+    </p>
+  </header>
+
+
+  <main class="flex-row justify-space-between">
+    <div class="col-12 col-md-3">
+
+      <div class="card">
+        <h3 class="card-header text-uppercase">Search By City</h3>
+        <form id="user-form" class="card-body">
+          <label class="form-label" for="cityname">City</label>
+          <input name="cityname" id="cityname" type="text" autofocus="true" class="form-input" />
+          <button type="submit" class="btn">Get City Weather</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3 class="card-header text-uppercase">Search List</h3>
+        <div id="city-buttons" class="card-body">
+          <button class="btn">Sydney</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-9">
+      <h2 class="subtitle">Five Day Forecast: </h2>
+      <div id="repos-container" class="flex-row justify-space-between">
+        <div class="col-md card" style="width: 12rem;" data-index="1">
+          <ul class="list-group list-group-flush">
+            <div class="card-header">30June2023</div>
+            <li class="list-group-item">icon</li>
+            <li class="list-group-item">Temp: <span id="temp">deg</span> degC</li>
+            <li class="list-group-item">Wind: <span id="wind">blow</span> mph</li>
+            <li class="list-group-item">Humidity: <span id="hum">num</span> %</li>
+          </ul>
+        </div>
+        <div class="col-md card" style="width: 12rem;" data-index="2">
+          <ul class="list-group list-group-flush">
+            <div class="card-header">30June2023</div>
+            <li class="list-group-item">icon</li>
+            <li class="list-group-item">Temp: <span id="temp">deg</span> degC</li>
+            <li class="list-group-item">Wind: <span id="wind">blow</span> mph</li>
+            <li class="list-group-item">Humidity: <span id="hum">num</span> %</li>
+          </ul>
+        </div>
+        <div class="col-md card" style="width: 12rem;" data-index="3">
+          <ul class="list-group list-group-flush">
+            <div class="card-header">30June2023</div>
+            <li class="list-group-item">icon</li>
+            <li class="list-group-item">Temp: <span id="temp">deg</span> degC</li>
+            <li class="list-group-item">Wind: <span id="wind">blow</span> mph</li>
+            <li class="list-group-item">Humidity: <span id="hum">num</span> %</li>
+          </ul>
+        </div>
+        <div class="col-md card" style="width: 12rem;" data-index="4">
+          <ul class="list-group list-group-flush">
+            <div class="card-header">30June2023</div>
+            <li class="list-group-item">icon</li>
+            <li class="list-group-item">Temp: <span id="temp">deg</span> degC</li>
+            <li class="list-group-item">Wind: <span id="wind">blow</span> mph</li>
+            <li class="list-group-item">Humidity: <span id="hum">num</span> %</li>
+          </ul>
+        </div>
+        <div class="col-md card" style="width: 12rem;" data-index="5">
+          <ul class="list-group list-group-flush">
+            <div class="card-header">30June2023</div>
+            <li class="list-group-item">icon</li>
+            <li class="list-group-item">Temp: <span id="temp">deg</span> degC</li>
+            <li class="list-group-item">Wind: <span id="wind">blow</span> mph</li>
+            <li class="list-group-item">Humidity: <span id="hum">num</span> %</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="./assets/js/homepage.js"></script>
+</body>
+
+</html>
