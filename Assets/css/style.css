@@ -1,8 +1,8 @@
 :root {
   --primary: #D3D3D3;
   --secondary: #FDD205;
-  --tertiary: #D3D3D3;
-  --light-dark: #30D5C8;
+  --tertiary: #FDD205;
+  --light-dark: #004138;
   --dark: #333333;
   --border-radius: 0.3rem;
 }
