@@ -1,51 +1,116 @@
-var cityFormEl = document.querySelector('#cityname');
+var cityFormEl = document.querySelector('#city-form');
 var cityButtonsEl = document.querySelector('#city-buttons');
-var nameInputEl = document.querySelector('#username');
-var repoContainerEl = document.querySelector('#repos-container');
-var repoSearchTerm = document.querySelector('#repo-search-term');
+var cityInputEl = document.querySelector('#cityname');
+var date0El = document.querySelector('#date0');
+var icon0El = document.querySelector('#icon0');
+var temp0El = document.querySelector('#temp0');
+var wind0El = document.querySelector('#wind0');
+var hum0El = document.querySelector('#hum0');
+var date1El = document.querySelector('#date1');
+var icon1El = document.querySelector('#icon1');
+var temp1El = document.querySelector('#temp1');
+var wind1El = document.querySelector('#wind1');
+var hum1El = document.querySelector('#hum1');
+var date2El = document.querySelector('#date2');
+var icon2El = document.querySelector('#icon2');
+var temp2El = document.querySelector('#temp2');
+var wind2El = document.querySelector('#wind2');
+var hum2El = document.querySelector('#hum2');
+var date3El = document.querySelector('#date3');
+var icon3El = document.querySelector('#icon3');
+var temp3El = document.querySelector('#temp3');
+var wind3El = document.querySelector('#wind3');
+var hum3El = document.querySelector('#hum3');
+var date4El = document.querySelector('#date4');
+var icon4El = document.querySelector('#icon4');
+var temp4El = document.querySelector('#temp4');
+var wind4El = document.querySelector('#wind4');
+var hum4El = document.querySelector('#hum4');
+var date5El = document.querySelector('#date5');
+var icon5El = document.querySelector('#icon5');
+var temp5El = document.querySelector('#temp5');
+var wind5El = document.querySelector('#wind5');
+var hum5El = document.querySelector('#hum5');
 
 const apiKey = 'dc15af11a8ecbd28152e9f41d885f99a';
+let tempCity = {
+  name: ''
+};
+let fetchName = "";
 
 var formSubmitHandler = function (event) {
   event.preventDefault();
-
-  let cityname = cityFormEl.value.trim();
+  tempCity.name = '';
+  let cityname = cityInputEl.value.trim();
+  console.log(cityname);
+  console.log(typeof(cityname));
 
   if (cityname) {
-    getUserRepos(cityname);
-    const cities = readCitiesFromStorage();
-    cities.push = cityname;
-    saveCityToStorage(cities);
+    getCityWeather(cityname);
+    
+    //console.log(cityname);
+    let cities = readCitiesFromStorage();
+    if (cities == null) {
+      tempCity.name = getCityWeather(cityname);
+      cities = [tempCity];
+      saveCityToStorage(cities);
+      displayButton();
+      //console.log(cities);
+    } else {
+      if (!checkDuplicate(cityname, cities)) {
+        tempCity.name = getCityWeather(cityname);
+        console.log(tempCity.name);
+        cities.push(tempCity);
+        console.log(cities);
+        saveCityToStorage(cities);
+        displayButton();
+        console.log(cities);
+      }
+    }
   } else {
     alert('Please enter a city name');
   }
 };
 
 var buttonClickHandler = function (event) {
-  var city = event.target.getAttribute('data-language');
-
-  if (language) {
-    getFeaturedRepos(language);
-
-    repoContainerEl.textContent = '';
+  let element = event.target;
+  if (element.matches("button") == true) {
+    let cityname = element.textContent;
+    getCityWeather(cityname);
   }
 };
 
-getCityWeather = function (place) {
+var getCityWeather = function (place) {
+  fetchName = '';
   var apiUrl1 = 'http://api.openweathermap.org/geo/1.0/direct?q=' + place + '&limit=1&appid=' + apiKey;
+  console.log(apiUrl1);
 
   fetch(apiUrl1)
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          let lat = data.lat;
-          let lon = data.lon;
-          var apiUrl2 = 'api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey + '&units=metric&';
+          console.log(data[0].name);
+          console.log(data[0].lat);
+          console.log(data[0].lon);
+          fetchName = data[0].name;
+          let lat = data[0].lat;
+          let lon = data[0].lon;
+          var apiUrl2 = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey + '&units=metric';
+          console.log(apiUrl2);
           fetch(apiUrl2)
             .then(function (response) {
               if (response.ok) {
                 response.json().then(function (data) {
                   console.log(data);
+                  const d = dayjs(data.list[0].dt_txt.split(" ")[0]).format('DD MMM YYYY');
+                  date0El.innerHTML = d;
+                  const icn = data.list[0].weather[0].icon;
+                  var iconUrl = 'https://openweathermap.org/img/wn/' + icn + '@2x.png';
+                  icon0El.href = iconUrl;
+                  temp0El.innerHTML = data.list[0].main.temp + '&deg;C';
+                  wind0El.innerHTML = data.list[0].wind.speed + 'mph';
+                  hum0El.innerHTML = data.list[0].main.humidity + '%';
+
                   displayWeather();
                 })
               } else {
@@ -63,15 +128,13 @@ getCityWeather = function (place) {
     .catch(function (error) {
       alert('Unable to connect to openweathermap.org');
     });
+    return fetchName;
 };
 
 function readCitiesFromStorage() {
   let cities = localStorage.getItem('cities');
   if (cities) {
     cities = JSON.parse(cities);
-  } else {
-    let text = ' ';
-    cities = [text];
   }
   return cities;
 }
@@ -80,52 +143,35 @@ function saveCityToStorage(cities) {
   localStorage.setItem('cities', JSON.stringify(cities));
 }
 
+function checkDuplicate(name1, names) {
+  for (i=0; i < names.length; i++) {
+    console.log(names.length);
+    if (name1 == names[i].name) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function displayButton() {
-  let cities = localStorage.getItem('cities');
-  if (readCitiesFromStorage) {
+  cityButtonsEl.innerHTML = "";
+  let cities = readCitiesFromStorage();
+  if (cities == null) {
+    return;
+  } else {
     for (i=0; i<cities.length; i++) {
       let btn = document.createElement("button");
       btn.setAttribute('class', 'btn');
-      btn.innerHTML = cities[i];
+      btn.innerHTML = cities[i].name;
+      console.log(btn.innerHTML);
+      console.log(cities[i].name);
       cityButtonsEl.appendChild(btn);
     }
   }
 }
 
-var displayRepos = function (repos, searchTerm) {
-  if (repos.length === 0) {
-    repoContainerEl.textContent = 'No repositories found.';
-    return;
-  }
 
-  repoSearchTerm.textContent = searchTerm;
+displayButton();
+cityFormEl.addEventListener('submit', formSubmitHandler);
+cityButtonsEl.addEventListener('click', buttonClickHandler);
 
-  for (var i = 0; i < repos.length; i++) {
-    var repoName = repos[i].owner.login + '/' + repos[i].name;
-
-    var repoEl = document.createElement('div');
-    repoEl.classList = 'list-item flex-row justify-space-between align-center';
-
-    var titleEl = document.createElement('span');
-    titleEl.textContent = repoName;
-
-    repoEl.appendChild(titleEl);
-
-    var statusEl = document.createElement('span');
-    statusEl.classList = 'flex-row align-center';
-
-    if (repos[i].open_issues_count > 0) {
-      statusEl.innerHTML =
-        "<i class='fas fa-times status-icon icon-danger'></i>" + repos[i].open_issues_count + ' issue(s)';
-    } else {
-      statusEl.innerHTML = "<i class='fas fa-check-square status-icon icon-success'></i>";
-    }
-
-    repoEl.appendChild(statusEl);
-
-    repoContainerEl.appendChild(repoEl);
-  }
-};
-
-userFormEl.addEventListener('submit', formSubmitHandler);
-languageButtonsEl.addEventListener('click', buttonClickHandler);
