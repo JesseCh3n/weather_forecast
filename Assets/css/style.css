@@ -1,9 +1,9 @@
 :root {
   --primary: #D3D3D3;
   --secondary: #FDD205;
-  --tertiary: #E41349;
-  --light-dark: #0F2D5B;
-  --dark: #091D3C;
+  --tertiary: #D3D3D3;
+  --light-dark: #30D5C8;
+  --dark: #333333;
   --border-radius: 0.3rem;
 }
 
@@ -127,7 +127,21 @@ p {
 #header-list {
   list-style-type: none;
   font-size: 2rem;
-  padding: 1%;
+  padding: 0.5%;
+}
+
+#icon0 {
+  width: 60px;
+  height: 60px;
+}
+
+#icon1,
+#icon2,
+#icon3,
+#icon4,
+#icon5 {
+  width: 30px;
+  height: 30px;
 }
 
 .list-item {

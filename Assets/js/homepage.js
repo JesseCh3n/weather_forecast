@@ -36,52 +36,9 @@ const apiKey = 'dc15af11a8ecbd28152e9f41d885f99a';
 let tempCity = {
   name: ''
 };
-let fetchName = "";
 
-var formSubmitHandler = function (event) {
-  event.preventDefault();
-  tempCity.name = '';
-  let cityname = cityInputEl.value.trim();
-  console.log(cityname);
-  console.log(typeof(cityname));
-
-  if (cityname) {
-    getCityWeather(cityname);
-    
-    //console.log(cityname);
-    let cities = readCitiesFromStorage();
-    if (cities == null) {
-      tempCity.name = getCityWeather(cityname);
-      cities = [tempCity];
-      saveCityToStorage(cities);
-      displayButton();
-      //console.log(cities);
-    } else {
-      if (!checkDuplicate(cityname, cities)) {
-        tempCity.name = getCityWeather(cityname);
-        console.log(tempCity.name);
-        cities.push(tempCity);
-        console.log(cities);
-        saveCityToStorage(cities);
-        displayButton();
-        console.log(cities);
-      }
-    }
-  } else {
-    alert('Please enter a city name');
-  }
-};
-
-var buttonClickHandler = function (event) {
-  let element = event.target;
-  if (element.matches("button") == true) {
-    let cityname = element.textContent;
-    getCityWeather(cityname);
-  }
-};
 
 var getCityWeather = function (place) {
-  fetchName = '';
   var apiUrl1 = 'http://api.openweathermap.org/geo/1.0/direct?q=' + place + '&limit=1&appid=' + apiKey;
   console.log(apiUrl1);
 
@@ -92,7 +49,6 @@ var getCityWeather = function (place) {
           console.log(data[0].name);
           console.log(data[0].lat);
           console.log(data[0].lon);
-          fetchName = data[0].name;
           let lat = data[0].lat;
           let lon = data[0].lon;
           var apiUrl2 = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey + '&units=metric';
@@ -101,17 +57,63 @@ var getCityWeather = function (place) {
             .then(function (response) {
               if (response.ok) {
                 response.json().then(function (data) {
-                  console.log(data);
-                  const d = dayjs(data.list[0].dt_txt.split(" ")[0]).format('DD MMM YYYY');
-                  date0El.innerHTML = d;
-                  const icn = data.list[0].weather[0].icon;
-                  var iconUrl = 'https://openweathermap.org/img/wn/' + icn + '@2x.png';
-                  icon0El.href = iconUrl;
+
+                  const d0 = dayjs(data.list[0].dt_txt.split(" ")[0]).format('DD MMM YYYY');
+                  date0El.innerHTML = d0;
+                  const icn0 = data.list[0].weather[0].icon;
+                  var iconUrl = 'https://openweathermap.org/img/wn/' + icn0 + '@2x.png';
+                  icon0El.src = iconUrl;
                   temp0El.innerHTML = data.list[0].main.temp + '&deg;C';
                   wind0El.innerHTML = data.list[0].wind.speed + 'mph';
                   hum0El.innerHTML = data.list[0].main.humidity + '%';
 
-                  displayWeather();
+                  const d1 = dayjs(data.list[8].dt_txt.split(" ")[0]).format('DD MMM YYYY');
+                  date1El.innerHTML = d1;
+                  const icn1 = data.list[8].weather[0].icon;
+                  iconUrl = 'https://openweathermap.org/img/wn/' + icn1 + '@2x.png';
+                  icon1El.src = iconUrl;
+                  temp1El.innerHTML = data.list[8].main.temp + '&deg;C';
+                  wind1El.innerHTML = data.list[8].wind.speed + 'mph';
+                  hum1El.innerHTML = data.list[8].main.humidity + '%';
+
+                  const d2 = dayjs(data.list[16].dt_txt.split(" ")[0]).format('DD MMM YYYY');
+                  console.log(d2);
+                  console.log(typeof(d2));
+                  date2El.innerHTML = d2;
+                  const icn2 = data.list[16].weather[0].icon;
+                  iconUrl = 'https://openweathermap.org/img/wn/' + icn2 + '@2x.png';
+                  icon2El.src = iconUrl;
+                  temp2El.innerHTML = data.list[16].main.temp + '&deg;C';
+                  wind2El.innerHTML = data.list[16].wind.speed + 'mph';
+                  hum2El.innerHTML = data.list[16].main.humidity + '%';
+
+                  const d3 = dayjs(data.list[24].dt_txt.split(" ")[0]).format('DD MMM YYYY');
+                  date3El.innerHTML = d3;
+                  const icn3 = data.list[24].weather[0].icon;
+                  iconUrl = 'https://openweathermap.org/img/wn/' + icn3 + '@2x.png';
+                  icon3El.src = iconUrl;
+                  temp3El.innerHTML = data.list[24].main.temp + '&deg;C';
+                  wind3El.innerHTML = data.list[24].wind.speed + 'mph';
+                  hum3El.innerHTML = data.list[24].main.humidity + '%';
+
+                  const d4 = dayjs(data.list[32].dt_txt.split(" ")[0]).format('DD MMM YYYY');
+                  date4El.innerHTML = d4;
+                  const icn4 = data.list[32].weather[0].icon;
+                  iconUrl = 'https://openweathermap.org/img/wn/' + icn4 + '@2x.png';
+                  icon4El.src = iconUrl;
+                  temp4El.innerHTML = data.list[32].main.temp + '&deg;C';
+                  wind4El.innerHTML = data.list[32].wind.speed + 'mph';
+                  hum4El.innerHTML = data.list[32].main.humidity + '%';
+
+                  const d5 = dayjs(data.list[39].dt_txt.split(" ")[0]).format('DD MMM YYYY');
+                  date5El.innerHTML = d5;
+                  const icn5 = data.list[39].weather[0].icon;
+                  iconUrl = 'https://openweathermap.org/img/wn/' + icn5 + '@2x.png';
+                  icon5El.src = iconUrl;
+                  temp5El.innerHTML = data.list[39].main.temp + '&deg;C';
+                  wind5El.innerHTML = data.list[39].wind.speed + 'mph';
+                  hum5El.innerHTML = data.list[39].main.humidity + '%';
+
                 })
               } else {
                 alert('Error: ' + response.statusText);
@@ -128,7 +130,6 @@ var getCityWeather = function (place) {
     .catch(function (error) {
       alert('Unable to connect to openweathermap.org');
     });
-    return fetchName;
 };
 
 function readCitiesFromStorage() {
@@ -170,6 +171,45 @@ function displayButton() {
   }
 }
 
+var formSubmitHandler = function (event) {
+  event.preventDefault();
+  tempCity.name = '';
+  let cityname = cityInputEl.value.trim();
+  cityname = cityname.toUpperCase();
+
+  if (cityname) {
+    getCityWeather(cityname);
+    //console.log(cityname);
+    let cities = readCitiesFromStorage();
+    if (cities == null) {
+      tempCity.name = cityname;
+      cities = [tempCity];
+      saveCityToStorage(cities);
+      displayButton();
+      //console.log(cities);
+    } else {
+      if (!checkDuplicate(cityname, cities)) {
+        tempCity.name = cityname;
+        console.log(tempCity.name);
+        cities.push(tempCity);
+        console.log(cities);
+        saveCityToStorage(cities);
+        displayButton();
+        console.log(cities);
+      }
+    }
+  } else {
+    alert('Please enter a city name');
+  }
+};
+
+var buttonClickHandler = function (event) {
+  let element = event.target;
+  if (element.matches("button") == true) {
+    let cityname = element.textContent;
+    getCityWeather(cityname);
+  }
+};
 
 displayButton();
 cityFormEl.addEventListener('submit', formSubmitHandler);
