@@ -37,22 +37,31 @@ let tempCity = {
   name: ''
 };
 
-
 var getCityWeather = function (place) {
   var apiUrl1 = 'http://api.openweathermap.org/geo/1.0/direct?q=' + place + '&limit=1&appid=' + apiKey;
-  console.log(apiUrl1);
 
   fetch(apiUrl1)
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          console.log(data[0].name);
-          console.log(data[0].lat);
-          console.log(data[0].lon);
           let lat = data[0].lat;
           let lon = data[0].lon;
+          let placeName = data[0].name;
+          let cities = readCitiesFromStorage();
+          if (cities == null) {
+            tempCity.name = placeName;
+            cities = [tempCity];
+            saveCityToStorage(cities);
+            displayButton();
+          } else {
+            if (!checkDuplicate(placeName, cities)) {
+              tempCity.name = placeName;
+              cities.push(tempCity);
+              saveCityToStorage(cities);
+              displayButton();
+            }
+          }
           var apiUrl2 = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey + '&units=metric';
-          console.log(apiUrl2);
           fetch(apiUrl2)
             .then(function (response) {
               if (response.ok) {
@@ -77,8 +86,6 @@ var getCityWeather = function (place) {
                   hum1El.innerHTML = data.list[8].main.humidity + '%';
 
                   const d2 = dayjs(data.list[16].dt_txt.split(" ")[0]).format('DD MMM YYYY');
-                  console.log(d2);
-                  console.log(typeof(d2));
                   date2El.innerHTML = d2;
                   const icn2 = data.list[16].weather[0].icon;
                   iconUrl = 'https://openweathermap.org/img/wn/' + icn2 + '@2x.png';
@@ -132,6 +139,7 @@ var getCityWeather = function (place) {
     });
 };
 
+
 function readCitiesFromStorage() {
   let cities = localStorage.getItem('cities');
   if (cities) {
@@ -146,7 +154,6 @@ function saveCityToStorage(cities) {
 
 function checkDuplicate(name1, names) {
   for (i=0; i < names.length; i++) {
-    console.log(names.length);
     if (name1 == names[i].name) {
       return true;
     }
@@ -164,8 +171,6 @@ function displayButton() {
       let btn = document.createElement("button");
       btn.setAttribute('class', 'btn');
       btn.innerHTML = cities[i].name;
-      console.log(btn.innerHTML);
-      console.log(cities[i].name);
       cityButtonsEl.appendChild(btn);
     }
   }
@@ -175,29 +180,8 @@ var formSubmitHandler = function (event) {
   event.preventDefault();
   tempCity.name = '';
   let cityname = cityInputEl.value.trim();
-  cityname = cityname.toUpperCase();
-
   if (cityname) {
     getCityWeather(cityname);
-    //console.log(cityname);
-    let cities = readCitiesFromStorage();
-    if (cities == null) {
-      tempCity.name = cityname;
-      cities = [tempCity];
-      saveCityToStorage(cities);
-      displayButton();
-      //console.log(cities);
-    } else {
-      if (!checkDuplicate(cityname, cities)) {
-        tempCity.name = cityname;
-        console.log(tempCity.name);
-        cities.push(tempCity);
-        console.log(cities);
-        saveCityToStorage(cities);
-        displayButton();
-        console.log(cities);
-      }
-    }
   } else {
     alert('Please enter a city name');
   }
