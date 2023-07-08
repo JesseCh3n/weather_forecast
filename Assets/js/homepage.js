@@ -66,6 +66,7 @@ var getCityWeather = function (place) {
             .then(function (response) {
               if (response.ok) {
                 response.json().then(function (data) {
+                  console.log(data);
 
                   const d0 = dayjs(data.list[0].dt_txt.split(" ")[0]).format('DD MMM YYYY');
                   date0El.innerHTML = d0;
@@ -76,41 +77,41 @@ var getCityWeather = function (place) {
                   wind0El.innerHTML = data.list[0].wind.speed + 'mph';
                   hum0El.innerHTML = data.list[0].main.humidity + '%';
 
-                  const d1 = dayjs(data.list[8].dt_txt.split(" ")[0]).format('DD MMM YYYY');
+                  const d1 = dayjs(data.list[7].dt_txt.split(" ")[0]).format('DD MMM YYYY');
                   date1El.innerHTML = d1;
-                  const icn1 = data.list[8].weather[0].icon;
+                  const icn1 = data.list[7].weather[0].icon;
                   iconUrl = 'https://openweathermap.org/img/wn/' + icn1 + '@2x.png';
                   icon1El.src = iconUrl;
-                  temp1El.innerHTML = data.list[8].main.temp + '&deg;C';
-                  wind1El.innerHTML = data.list[8].wind.speed + 'mph';
-                  hum1El.innerHTML = data.list[8].main.humidity + '%';
+                  temp1El.innerHTML = data.list[7].main.temp + '&deg;C';
+                  wind1El.innerHTML = data.list[7].wind.speed + 'mph';
+                  hum1El.innerHTML = data.list[7].main.humidity + '%';
 
-                  const d2 = dayjs(data.list[16].dt_txt.split(" ")[0]).format('DD MMM YYYY');
+                  const d2 = dayjs(data.list[15].dt_txt.split(" ")[0]).format('DD MMM YYYY');
                   date2El.innerHTML = d2;
-                  const icn2 = data.list[16].weather[0].icon;
+                  const icn2 = data.list[15].weather[0].icon;
                   iconUrl = 'https://openweathermap.org/img/wn/' + icn2 + '@2x.png';
                   icon2El.src = iconUrl;
-                  temp2El.innerHTML = data.list[16].main.temp + '&deg;C';
-                  wind2El.innerHTML = data.list[16].wind.speed + 'mph';
-                  hum2El.innerHTML = data.list[16].main.humidity + '%';
+                  temp2El.innerHTML = data.list[15].main.temp + '&deg;C';
+                  wind2El.innerHTML = data.list[15].wind.speed + 'mph';
+                  hum2El.innerHTML = data.list[15].main.humidity + '%';
 
-                  const d3 = dayjs(data.list[24].dt_txt.split(" ")[0]).format('DD MMM YYYY');
+                  const d3 = dayjs(data.list[23].dt_txt.split(" ")[0]).format('DD MMM YYYY');
                   date3El.innerHTML = d3;
-                  const icn3 = data.list[24].weather[0].icon;
+                  const icn3 = data.list[23].weather[0].icon;
                   iconUrl = 'https://openweathermap.org/img/wn/' + icn3 + '@2x.png';
                   icon3El.src = iconUrl;
-                  temp3El.innerHTML = data.list[24].main.temp + '&deg;C';
-                  wind3El.innerHTML = data.list[24].wind.speed + 'mph';
-                  hum3El.innerHTML = data.list[24].main.humidity + '%';
+                  temp3El.innerHTML = data.list[23].main.temp + '&deg;C';
+                  wind3El.innerHTML = data.list[23].wind.speed + 'mph';
+                  hum3El.innerHTML = data.list[23].main.humidity + '%';
 
-                  const d4 = dayjs(data.list[32].dt_txt.split(" ")[0]).format('DD MMM YYYY');
+                  const d4 = dayjs(data.list[31].dt_txt.split(" ")[0]).format('DD MMM YYYY');
                   date4El.innerHTML = d4;
-                  const icn4 = data.list[32].weather[0].icon;
+                  const icn4 = data.list[31].weather[0].icon;
                   iconUrl = 'https://openweathermap.org/img/wn/' + icn4 + '@2x.png';
                   icon4El.src = iconUrl;
-                  temp4El.innerHTML = data.list[32].main.temp + '&deg;C';
-                  wind4El.innerHTML = data.list[32].wind.speed + 'mph';
-                  hum4El.innerHTML = data.list[32].main.humidity + '%';
+                  temp4El.innerHTML = data.list[31].main.temp + '&deg;C';
+                  wind4El.innerHTML = data.list[31].wind.speed + 'mph';
+                  hum4El.innerHTML = data.list[31].main.humidity + '%';
 
                   const d5 = dayjs(data.list[39].dt_txt.split(" ")[0]).format('DD MMM YYYY');
                   date5El.innerHTML = d5;
