@@ -38,7 +38,7 @@ let tempCity = {
 };
 
 var getCityWeather = function (place) {
-  var apiUrl1 = 'http://api.openweathermap.org/geo/1.0/direct?q=' + place + '&limit=1&appid=' + apiKey;
+  var apiUrl1 = 'https://api.openweathermap.org/geo/1.0/direct?q=' + place + '&limit=1&appid=' + apiKey;
 
   fetch(apiUrl1)
     .then(function (response) {
@@ -61,7 +61,7 @@ var getCityWeather = function (place) {
               displayButton();
             }
           }
-          var apiUrl2 = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey + '&units=metric';
+          var apiUrl2 = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey + '&units=metric';
           fetch(apiUrl2)
             .then(function (response) {
               if (response.ok) {
